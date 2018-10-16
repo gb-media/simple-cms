@@ -6,6 +6,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
         "guzzlehttp/guzzle": "^6.3",
+        "neronmoon/scriptsdev": "^0.1.3",
         "symfony/console": "^4.0",
         "symfony/flex": "^1.0",
         "symfony/framework-bundle": "^4.0",
@@ -13,7 +14,8 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
-        "api-platform/schema-generator": "^2.1",
+        "brainmaestro/composer-git-hooks": "^2.5",
+        "friendsofphp/php-cs-fixer": "^2.13",
         "symfony/profiler-pack": "^1.0"
     },
     "config": {
@@ -49,12 +51,26 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "phpcs": [
+            "./vendor/bin/php-cs-fixer fix -v --show-progress=dots"
         ]
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "extra": {
+        "hooks": {
+            "pre-commit": "docker-compose run --rm php sh -c 'composer phpcs'"
+        },
+        "scripts-dev": {
+            "post-install-cmd": [
+                "./vendor/bin/cghooks add --ignore-lock --git-dir=../.git"
+            ],
+            "post-update-cmd": [
+                "./vendor/bin/cghooks update --git-dir=../.git"
+            ]
+        },
         "symfony": {
             "allow-contrib": false
         }

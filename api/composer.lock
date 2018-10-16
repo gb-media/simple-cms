@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "50f71f8d984187ad3a04e873521ae502",
+    "content-hash": "51c82073c1d2e64fb3128f5852ca84a9",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -1483,6 +1483,56 @@
             "time": "2017-12-11T18:41:54+00:00"
         },
         {
+            "name": "neronmoon/scriptsdev",
+            "version": "v0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neronmoon/scriptsdev.git",
+                "reference": "4286d2009e9918ce7874a61c43640b1f1eae63d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/4286d2009e9918ce7874a61c43640b1f1eae63d4",
+                "reference": "4286d2009e9918ce7874a61c43640b1f1eae63d4",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0@dev"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ScriptsDev\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ScriptsDev\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy Krasnoperov",
+                    "email": "alistar.neron@gmail.com"
+                }
+            ],
+            "description": "Scripts-dev behaviour for Composer",
+            "homepage": "https://github.com/neronmoon/scriptsdev",
+            "keywords": [
+                "commands",
+                "commands execution",
+                "composer",
+                "dev",
+                "scripts"
+            ],
+            "time": "2018-09-04T13:40:15+00:00"
+        },
+        {
             "name": "phpdocumentor/reflection-common",
             "version": "1.0.1",
             "source": {
@@ -2917,12 +2967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/lts.git",
-                "reference": "b5442df5a473775a3e5b34287e61570b45deb771"
+                "reference": "c1affae45b78aee036effa1759237e7fa96d4af2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/lts/zipball/b5442df5a473775a3e5b34287e61570b45deb771",
-                "reference": "b5442df5a473775a3e5b34287e61570b45deb771",
+                "url": "https://api.github.com/repos/symfony/lts/zipball/c1affae45b78aee036effa1759237e7fa96d4af2",
+                "reference": "c1affae45b78aee036effa1759237e7fa96d4af2",
                 "shasum": ""
             },
             "conflict": {
@@ -3003,7 +3053,7 @@
             "description": "Enforces Long Term Supported versions of Symfony components",
             "homepage": "https://symfony.com",
             "abandoned": "symfony/flex",
-            "time": "2018-09-13T17:13:03+00:00"
+            "time": "2018-10-03T12:03:19+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -4071,49 +4121,44 @@
     ],
     "packages-dev": [
         {
-            "name": "api-platform/schema-generator",
-            "version": "v2.1.0",
+            "name": "brainmaestro/composer-git-hooks",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/api-platform/schema-generator.git",
-                "reference": "849d34cc19fd86851d3015a8cbd3d8fe00da3ef8"
+                "url": "https://github.com/BrainMaestro/composer-git-hooks.git",
+                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/schema-generator/zipball/849d34cc19fd86851d3015a8cbd3d8fe00da3ef8",
-                "reference": "849d34cc19fd86851d3015a8cbd3d8fe00da3ef8",
+                "url": "https://api.github.com/repos/BrainMaestro/composer-git-hooks/zipball/5b2feb35fa8d460b14fc71792aca57f97d349430",
+                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430",
                 "shasum": ""
             },
             "require": {
-                "doctrine/inflector": "^1.0",
-                "easyrdf/easyrdf": "^0.9",
-                "ext-json": "*",
-                "friendsofphp/php-cs-fixer": "^2.10",
-                "league/html-to-markdown": "^4.0",
-                "php": ">=7.1",
-                "psr/log": "^1.0",
-                "symfony/config": "^3.3 || ^4.0",
-                "symfony/console": "^2.7 || ^3.0 || ^4.0",
-                "symfony/yaml": "^2.7 || ^3.0 || ^4.0",
-                "twig/twig": "^1.35 || ^2.0"
+                "php": "^5.6 || >=7.0 <7.3",
+                "symfony/console": "^3.2 || ^4.0"
             },
             "require-dev": {
-                "api-platform/core": "^2.0",
-                "doctrine/orm": "^2.2",
-                "myclabs/php-enum": "^1.0",
-                "symfony/doctrine-bridge": "^2.7 || ^3.0 || ^4.0",
-                "symfony/filesystem": "^2.7 || ^3.0 || ^4.0",
-                "symfony/serializer": "^2.7 || ^3.0 || ^4.0",
-                "symfony/validator": "^2.7 || ^3.0 || ^4.0"
+                "friendsofphp/php-cs-fixer": "^2.9",
+                "phpunit/phpunit": "^5.7|^7.0"
             },
             "bin": [
-                "bin/schema"
+                "cghooks"
             ],
             "type": "library",
+            "extra": {
+                "hooks": {
+                    "pre-commit": "composer check-style",
+                    "pre-push": "composer test"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "ApiPlatform\\SchemaGenerator\\": "src/"
-                }
+                    "BrainMaestro\\GitHooks\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4121,22 +4166,17 @@
             ],
             "authors": [
                 {
-                    "name": "Kévin Dunglas",
-                    "email": "dunglas@gmail.com"
+                    "name": "Ezinwa Okpoechi",
+                    "email": "brainmaestro@outlook.com"
                 }
             ],
-            "description": "Various tools to generate a data model based on Schema.org vocables",
-            "homepage": "https://api-platform.com",
+            "description": "Easily manage git hooks in your composer config",
             "keywords": [
-                "doctrine",
-                "entity",
-                "enum",
-                "model",
-                "schema.org",
-                "semantic",
-                "symfony"
+                "HOOK",
+                "composer",
+                "git"
             ],
-            "time": "2018-01-23T13:41:27+00:00"
+            "time": "2018-09-02T01:27:40+00:00"
         },
         {
             "name": "composer/semver",
@@ -4245,68 +4285,6 @@
             "time": "2018-08-31T19:07:57+00:00"
         },
         {
-            "name": "easyrdf/easyrdf",
-            "version": "0.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/njh/easyrdf.git",
-                "reference": "acd09dfe0555fbcfa254291e433c45fdd4652566"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/njh/easyrdf/zipball/acd09dfe0555fbcfa254291e433c45fdd4652566",
-                "reference": "acd09dfe0555fbcfa254291e433c45fdd4652566",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-pcre": "*",
-                "php": ">=5.2.8"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.5",
-                "sami/sami": "~1.4",
-                "squizlabs/php_codesniffer": "~1.4.3"
-            },
-            "suggest": {
-                "ml/json-ld": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "EasyRdf_": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nicholas Humfrey",
-                    "email": "njh@aelius.com",
-                    "homepage": "http://www.aelius.com/njh/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Alexey Zakhlestin",
-                    "email": "indeyets@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "EasyRdf is a PHP library designed to make it easy to consume and produce RDF.",
-            "homepage": "http://www.easyrdf.org/",
-            "keywords": [
-                "Linked Data",
-                "RDF",
-                "Semantic Web",
-                "Turtle",
-                "rdfa",
-                "sparql"
-            ],
-            "time": "2015-02-27T09:45:49+00:00"
-        },
-        {
             "name": "friendsofphp/php-cs-fixer",
             "version": "v2.13.0",
             "source": {
@@ -4401,70 +4379,6 @@
             ],
             "description": "A tool to automatically fix PHP code style",
             "time": "2018-08-23T13:15:44+00:00"
-        },
-        {
-            "name": "league/html-to-markdown",
-            "version": "4.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/html-to-markdown.git",
-                "reference": "f9a879a068c68ff47b722de63f58bec79e448f9d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/html-to-markdown/zipball/f9a879a068c68ff47b722de63f58bec79e448f9d",
-                "reference": "f9a879a068c68ff47b722de63f58bec79e448f9d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-xml": "*",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "mikehaertl/php-shellcommand": "~1.1.0",
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "bin": [
-                "bin/html-to-markdown"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\HTMLToMarkdown\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nick Cernis",
-                    "email": "nick@cern.is",
-                    "homepage": "http://modernnerd.net",
-                    "role": "Original Author"
-                },
-                {
-                    "name": "Colin O'Dell",
-                    "email": "colinodell@gmail.com",
-                    "homepage": "https://www.colinodell.com",
-                    "role": "Lead Developer"
-                }
-            ],
-            "description": "An HTML-to-markdown conversion helper for PHP",
-            "homepage": "https://github.com/thephpleague/html-to-markdown",
-            "keywords": [
-                "html",
-                "markdown"
-            ],
-            "time": "2018-09-18T12:18:08+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

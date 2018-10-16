@@ -16,6 +16,7 @@ services:
       - ./api/.env
     # Comment out these volumes in production
     volumes:
+      - ./.git:/srv/.git:rw
       - ./api:/srv/api:rw,cached
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
