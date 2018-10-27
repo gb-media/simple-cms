@@ -6,9 +6,10 @@ parameters:
     env(VARNISH_URL): ''
 
 api_platform:
+    description: List of different public resources of our API
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
-    title: Hello API Platform
+    title: Simple CMS
     version: 1.0.0
     # Enable the Varnish integration
     http_cache:
