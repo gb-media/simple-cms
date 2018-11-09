@@ -1,8 +1,8 @@
 FROM node:10.10-alpine
 
-RUN mkdir -p /usr/src/client
+RUN mkdir -p /usr/src/client-react
 
-WORKDIR /usr/src/client
+WORKDIR /usr/src/client-react
 
 RUN yarn global add @api-platform/client-generator
 

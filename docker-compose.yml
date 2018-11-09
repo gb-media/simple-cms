@@ -71,19 +71,19 @@ services:
     ports:
       - "5432:5432"
 
-  client:
+  client-react:
     # Use a static website hosting service in production
     # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
-    image: ${CONTAINER_REGISTRY_BASE}/client
+    image: ${CONTAINER_REGISTRY_BASE}/client-react
     build:
-      context: ./client
+      context: client-react
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client
+        - ${CONTAINER_REGISTRY_BASE}/client-react
     env_file:
-      - ./client/.env
+      - client-react/.env
     volumes:
-      - ./client:/usr/src/client:rw,cached
-      - /usr/src/client/node_modules
+      - ./client-react:/usr/src/client-react:rw,cached
+      - /usr/src/client-react/node_modules
     ports:
       - "80:3000"
 
@@ -108,7 +108,7 @@ services:
     build:
       context: ./h2-proxy
     depends_on:
-      - client
+      - client-react
       - admin
       - api
       - cache-proxy
