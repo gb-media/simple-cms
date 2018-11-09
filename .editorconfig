@@ -55,6 +55,10 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
+[*.neon{,.dist}]
+indent_style = tab
+indent_size = 4
+
 [.travis.yml]
 indent_style = space
 indent_size = 2

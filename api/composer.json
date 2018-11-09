@@ -18,6 +18,9 @@
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.5",
         "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.10.5",
+        "phpstan/phpstan-doctrine": "^0.10.0",
+        "phpstan/phpstan-symfony": "^0.10.2",
         "symfony/profiler-pack": "^1.0"
     },
     "config": {
@@ -55,7 +58,10 @@
             "@auto-scripts"
         ],
         "phpcs": [
-            "./vendor/bin/php-cs-fixer fix -v --show-progress=dots"
+            "./vendor/bin/php-cs-fixer fix --show-progress=dots -vvv"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse src --level=7 --no-progress -vvv"
         ]
     },
     "conflict": {
@@ -63,7 +69,7 @@
     },
     "extra": {
         "hooks": {
-            "pre-commit": "docker-compose run --rm php sh -c 'composer phpcs'"
+            "pre-commit": "docker-compose run --rm php sh -c 'composer phpcs && composer phpstan'"
         },
         "scripts-dev": {
             "post-install-cmd": [
