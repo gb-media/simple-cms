@@ -71,6 +71,38 @@ services:
     ports:
       - "5432:5432"
 
+  client-symfony-php:
+    image: ${CONTAINER_REGISTRY_BASE}/client-symfony-php
+    build:
+      context: ./client-symfony
+      target: symfony_php
+      cache_from:
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+    env_file:
+      - ./client-symfony/.env
+    # Comment out these volumes in production
+    volumes:
+      - ./client-symfony:/srv/client-symfony:rw,cached
+      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+      - ./client-symfony/var:/srv/client-symfony/var:rw
+
+  client-symfony-nginx:
+    image: ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+    build:
+      context: ./client-symfony
+      target: symfony_nginx
+      cache_from:
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+    depends_on:
+      - client-symfony-php
+    # Comment out this volume in production
+    volumes:
+      - ./client-symfony/public:/srv/client-symfony/public:ro
+    ports:
+      - "80:80"
+
   client-react:
     # Use a static website hosting service in production
     # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
@@ -85,7 +117,7 @@ services:
       - ./client-react:/usr/src/client-react:rw,cached
       - /usr/src/client-react/node_modules
     ports:
-      - "80:3000"
+      - "81:3000"
 
   admin:
     # Use a static website hosting service in production
@@ -101,7 +133,7 @@ services:
       - ./admin:/usr/src/admin:rw,cached
       - /usr/src/admin/node_modules
     ports:
-      - "81:3000"
+      - "90:3000"
 
   h2-proxy:
     # Don't use this proxy in prod
