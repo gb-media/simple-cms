@@ -78,7 +78,7 @@ services:
       target: symfony_php
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony
     env_file:
       - ./client-symfony/.env
     # Comment out these volumes in production
@@ -87,14 +87,14 @@ services:
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       - ./client-symfony/var:/srv/client-symfony/var:rw
 
-  client-symfony-nginx:
-    image: ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+  client-symfony:
+    image: ${CONTAINER_REGISTRY_BASE}/client-symfony
     build:
       context: ./client-symfony
       target: symfony_nginx
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony-nginx
+        - ${CONTAINER_REGISTRY_BASE}/client-symfony
     depends_on:
       - client-symfony-php
     # Comment out this volume in production
@@ -140,6 +140,7 @@ services:
     build:
       context: ./h2-proxy
     depends_on:
+      - client-symfony
       - client-react
       - admin
       - api
@@ -147,6 +148,7 @@ services:
     ports:
       - "443:443"
       - "444:444"
+      - "493:493"
       - "8443:8443"
       - "8444:8444"
 
