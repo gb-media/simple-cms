@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -36,7 +38,7 @@ class Kernel extends BaseKernel
         }
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
         // Feel free to remove the "container.autowiring.strict_mode" parameter
@@ -51,7 +53,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir().'/config';
 
@@ -60,7 +62,7 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
     }
 
-    public static function bootstrapCli(array &$argv)
+    public static function bootstrapCli(array &$argv): void
     {
         // consume --env and --no-debug from the command line
 
@@ -91,13 +93,13 @@ class Kernel extends BaseKernel
         }
     }
 
-    public static function bootstrapEnv($env = null)
+    public static function bootstrapEnv($env = null): void
     {
         if (null !== $env) {
             putenv('APP_ENV='.$_SERVER['APP_ENV'] = $env);
         }
 
-        if ('prod' !== $_SERVER['APP_ENV'] = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : (isset($_ENV['APP_ENV']) ? $_ENV['APP_ENV'] : null)) {
+        if ('prod' !== $_SERVER['APP_ENV'] = $_SERVER['APP_ENV'] ?? ($_ENV['APP_ENV'] ?? null)) {
             if (!class_exists(Dotenv::class)) {
                 throw new \RuntimeException('The "APP_ENV" environment variable is not defined. You need to set it or run "composer require symfony/dotenv" to load it from a ".env" file.');
             }
@@ -107,22 +109,22 @@ class Kernel extends BaseKernel
             self::loadEnv(new Dotenv(), \dirname(__DIR__).'/.env');
         }
 
-        $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : 'dev';
-        $_SERVER['APP_DEBUG'] = isset($_SERVER['APP_DEBUG']) ? $_SERVER['APP_DEBUG'] : (isset($_ENV['APP_DEBUG']) ? $_ENV['APP_DEBUG'] : 'prod' !== $_SERVER['APP_ENV']);
+        $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = $_SERVER['APP_ENV'] ?? 'dev';
+        $_SERVER['APP_DEBUG'] = $_SERVER['APP_DEBUG'] ?? ($_ENV['APP_DEBUG'] ?? 'prod' !== $_SERVER['APP_ENV']);
         $_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = (int) $_SERVER['APP_DEBUG'] || filter_var($_SERVER['APP_DEBUG'], FILTER_VALIDATE_BOOLEAN) ? '1' : '0';
     }
 
-    private static function loadEnv(Dotenv $dotenv, $path)
+    private static function loadEnv(Dotenv $dotenv, $path): void
     {
         $dotenv->load($path);
 
-        if (null === $env = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : (isset($_ENV['APP_ENV']) ? $_ENV['APP_ENV'] : null)) {
-            $dotenv->populate(array('APP_ENV' => $env = 'dev'));
+        if (null === $env = $_SERVER['APP_ENV'] ?? ($_ENV['APP_ENV'] ?? null)) {
+            $dotenv->populate(['APP_ENV' => $env = 'dev']);
         }
 
         if ('test' !== $env && file_exists($p = "$path.local")) {
             $dotenv->load($p);
-            $env = isset($_SERVER['APP_ENV']) ? $_SERVER['APP_ENV'] : (isset($_ENV['APP_ENV']) ? $_ENV['APP_ENV'] : $env);
+            $env = $_SERVER['APP_ENV'] ?? ($_ENV['APP_ENV'] ?? $env);
         }
 
         if (file_exists($p = "$path.$env")) {
