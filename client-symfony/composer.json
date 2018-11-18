@@ -10,7 +10,8 @@
         "symfony/console": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "webmozart/assert": "^1.3"
     },
     "replace": {
         "paragonie/random_compat": "2.*",
@@ -27,6 +28,7 @@
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.10.5",
         "phpstan/phpstan-symfony": "^0.10.2",
+        "phpstan/phpstan-webmozart-assert": "^0.10.0",
         "symfony/dotenv": "*"
     },
     "config": {
