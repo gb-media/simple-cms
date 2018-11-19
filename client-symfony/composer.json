@@ -3,6 +3,12 @@
     "type": "project",
     "description": "An example of a website made with symfony 4 and guzzle.",
     "license": "proprietary",
+    "authors": [
+        {
+            "name": "Prou Yann",
+            "email": "prouyann@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.1.3",
         "ext-ctype": "*",
@@ -70,11 +76,11 @@
         "phpcs": [
             "./vendor/bin/php-cs-fixer fix -v --show-progress=dots"
         ],
-        "phpunit": [
-            "./bin/phpunit"
-        ],
         "phpstan": [
             "./vendor/bin/phpstan analyse src tests --level=7 --no-progress -vvv"
+        ],
+        "phpunit": [
+            "./bin/phpunit"
         ]
     }
 }

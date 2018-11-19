@@ -1,0 +1,28 @@
+{
+    "name": "toofff/simple-cms",
+    "type": "project",
+    "description": "Simple CMS with API Platform",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Prou Yann",
+            "email": "prouyann@gmail.com"
+        }
+    ],
+    "require": {
+        "brainmaestro/composer-git-hooks": "^2.5"
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": "docker-compose run --rm php sh -c 'composer phpcs && composer phpstan'; docker-compose run --rm client-symfony-php sh -c 'composer phpcs && composer phpstan && composer phpunit'"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "./vendor/bin/cghooks add --ignore-lock"
+        ],
+        "post-update-cmd": [
+            "./vendor/bin/cghooks update"
+        ]
+    }
+}

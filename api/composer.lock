@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e21764bf591f5630be5a62f12e7729ff",
+    "content-hash": "c002170725646415d0f294fb34d27a35",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -1606,56 +1606,6 @@
                 "crossdomain"
             ],
             "time": "2017-12-11T18:41:54+00:00"
-        },
-        {
-            "name": "neronmoon/scriptsdev",
-            "version": "v0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/neronmoon/scriptsdev.git",
-                "reference": "4286d2009e9918ce7874a61c43640b1f1eae63d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neronmoon/scriptsdev/zipball/4286d2009e9918ce7874a61c43640b1f1eae63d4",
-                "reference": "4286d2009e9918ce7874a61c43640b1f1eae63d4",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0"
-            },
-            "require-dev": {
-                "composer/composer": "~1.0@dev"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ScriptsDev\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ScriptsDev\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitaliy Krasnoperov",
-                    "email": "alistar.neron@gmail.com"
-                }
-            ],
-            "description": "Scripts-dev behaviour for Composer",
-            "homepage": "https://github.com/neronmoon/scriptsdev",
-            "keywords": [
-                "commands",
-                "commands execution",
-                "composer",
-                "dev",
-                "scripts"
-            ],
-            "time": "2018-09-04T13:40:15+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4494,64 +4444,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "brainmaestro/composer-git-hooks",
-            "version": "v2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BrainMaestro/composer-git-hooks.git",
-                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BrainMaestro/composer-git-hooks/zipball/5b2feb35fa8d460b14fc71792aca57f97d349430",
-                "reference": "5b2feb35fa8d460b14fc71792aca57f97d349430",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || >=7.0 <7.3",
-                "symfony/console": "^3.2 || ^4.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.9",
-                "phpunit/phpunit": "^5.7|^7.0"
-            },
-            "bin": [
-                "cghooks"
-            ],
-            "type": "library",
-            "extra": {
-                "hooks": {
-                    "pre-commit": "composer check-style",
-                    "pre-push": "composer test"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "BrainMaestro\\GitHooks\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ezinwa Okpoechi",
-                    "email": "brainmaestro@outlook.com"
-                }
-            ],
-            "description": "Easily manage git hooks in your composer config",
-            "keywords": [
-                "HOOK",
-                "composer",
-                "git"
-            ],
-            "time": "2018-09-02T01:27:40+00:00"
-        },
         {
             "name": "composer/semver",
             "version": "1.4.2",
