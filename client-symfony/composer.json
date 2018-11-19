@@ -27,9 +27,12 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.10.5",
+        "phpstan/phpstan-phpunit": "^0.10.0",
         "phpstan/phpstan-symfony": "^0.10.2",
         "phpstan/phpstan-webmozart-assert": "^0.10.0",
-        "symfony/dotenv": "*"
+        "symfony/dotenv": "*",
+        "symfony/phpunit-bridge": "^4.1.7",
+        "symfony/profiler-pack": "^1.0.3"
     },
     "config": {
         "preferred-install": {
@@ -67,8 +70,11 @@
         "phpcs": [
             "./vendor/bin/php-cs-fixer fix -v --show-progress=dots"
         ],
+        "phpunit": [
+            "./bin/phpunit"
+        ],
         "phpstan": [
-            "./vendor/bin/phpstan analyse src --level=7 --no-progress -vvv"
+            "./vendor/bin/phpstan analyse src tests --level=7 --no-progress -vvv"
         ]
     }
 }
