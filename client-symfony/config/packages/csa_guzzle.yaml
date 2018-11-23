@@ -1,0 +1,9 @@
+csa_guzzle:
+    profiler: '%kernel.debug%'
+    clients:
+        simple_cms_api:
+            config:
+                base_uri: '%env(resolve:SIMPLE_CMS_API_BASE_URL)%'
+                headers:
+                    Accept: application/json
+    default_client: simple_cms_api
