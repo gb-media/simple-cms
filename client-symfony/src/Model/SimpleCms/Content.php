@@ -8,7 +8,7 @@ use App\Model\ReflectionClassTrait;
 
 final class Content
 {
-    use ReflectionClassTrait;
+    use ReflectionCltassTrait;
 
     /** @var string */
     public $id;
@@ -20,9 +20,4 @@ final class Content
     public $createdAt;
     /** @var \DateTime */
     public $updatedAt;
-
-    public function normalize()
-    {
-
-    }
 }

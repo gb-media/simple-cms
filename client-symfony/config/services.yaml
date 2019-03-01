@@ -14,6 +14,9 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Resource\AbstractResource:
+        abstract: true
+
     App\Resource\SimpleCms\:
         arguments:
             $client: '@csa_guzzle.client.simple_cms_api'

@@ -14,6 +14,11 @@ use PHPUnit\Framework\TestCase;
 
 class AbstractWebServiceTest extends TestCase
 {
+    public function testGetCollectionShouldThrowExceptionForEmptyDeleteArgument(): void
+    {
+
+    }
+
     public function testShouldThrowExceptionForEmptyDeleteArgument(): void
     {
         $this->expectException(ResourceException::class);
