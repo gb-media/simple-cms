@@ -1,0 +1,73 @@
+version: 2
+
+reusable-steps:
+    - &restore-composer-cache
+        restore_cache:
+            keys:
+                - composer-cache-{{ .Revision }}
+                - composer-cache-{{ .Branch }}
+                - composer-cache
+    - &restore-php-cs-fixer-cache
+        restore_cache:
+            keys:
+                - php-cs-fixer-cache-{{ .Revision }}
+                - php-cs-fixer-cache-{{ .Branch }}
+                - php-cs-fixer-cache
+    - &save-composer-cache-by-branch
+        save_cache:
+            paths:
+                - ~/.composer/cache
+            key: composer-cache-{{ .Branch }}-{{ .BuildNum }}
+    - &save-composer-cache-by-revision
+        save_cache:
+            paths:
+                - ~/.composer/cache
+            key: composer-cache-{{ .Revision }}-{{ .BuildNum }}
+    - &save-php-cs-fixer-cache-by-branch
+        save_cache:
+            paths:
+                - .php_cs.cache
+            key: php-cs-fixer-cache-{{ .Branch }}-{{ .BuildNum }}
+    - &save-php-cs-fixer-cache-by-revision
+        save_cache:
+            paths:
+                - .php_cs.cache
+            key: php-cs-fixer-cache-{{ .Revision }}-{{ .BuildNum }}
+    - &update-composer
+        run:
+            name: Update Composer
+            command: sudo composer self-update
+
+jobs:
+    php-cs-fixer:
+        docker:
+            - image: circleci/php:7.2
+
+        executor: php
+        environment:
+            PHP_CS_FIXER_FUTURE_MODE: 1
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-php-cs-fixer-cache
+            - *update-composer
+            - run:
+                name: Install PHP-CS-Fixer
+                command: composer global require friendsofphp/php-cs-fixer:^2.14
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - run:
+                name: Run PHP-CS-Fixer
+                command: |-
+                    export PATH="$PATH:$HOME/.composer/vendor/bin"
+                    cd ./client-symfony/
+                    php-cs-fixer fix --dry-run --diff --ansi
+            - *save-php-cs-fixer-cache-by-revision
+            - *save-php-cs-fixer-cache-by-branch
+
+workflows:
+    version: 2
+    lint:
+        jobs:
+            - php-cs-fixer
