@@ -1,5 +1,7 @@
 # SIMPLE CMS
 
+[![CircleCI](https://circleci.com/gh/toofff/simple-cms.svg?style=svg)](https://circleci.com/gh/toofff/simple-cms)
+
 This experimental project wants to be a simple CMS built with API Platform.
 
 ## Installing this project

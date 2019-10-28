@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e18889310d2c7e51f5b8c46b364ff619",
+    "content-hash": "d145a30b0e7c388b8a83562f12924c6d",
     "packages": [
         {
             "name": "brainmaestro/composer-git-hooks",

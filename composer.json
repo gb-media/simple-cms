@@ -14,7 +14,7 @@
     },
     "extra": {
         "hooks": {
-            "pre-commit": "docker-compose run --rm php sh -c 'composer phpcs && composer phpstan'; docker-compose run --rm client-symfony-php sh -c 'composer phpcs && composer phpstan && composer phpunit'"
+            "pre-commit": "docker-compose run --rm php sh -c 'composer lint && composer phpstan'; docker-compose run --rm client-symfony-php sh -c 'composer lint && composer phpstan && composer phpunit'"
         }
     },
     "scripts": {

@@ -1,73 +1,154 @@
 version: 2
 
 reusable-steps:
+    - &install-project-dependencies
+        run:
+            name: Install Project Dependancies on "${CI_PROJECT_PATH}"
+            command: |-
+                export PATH="$PATH:$HOME/.composer/vendor/bin"
+                cd ./${CI_PROJECT_PATH}
+                composer install
     - &restore-composer-cache
         restore_cache:
             keys:
-                - composer-cache-{{ .Revision }}
-                - composer-cache-{{ .Branch }}
-                - composer-cache
-    - &restore-php-cs-fixer-cache
+                - composer-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Revision }}
+                - composer-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Branch }}
+                - composer-cache-{{ .Environment.CI_PROJECT_PATH }}
+    - &restore-project-dependencies-cache
         restore_cache:
             keys:
-                - php-cs-fixer-cache-{{ .Revision }}
-                - php-cs-fixer-cache-{{ .Branch }}
-                - php-cs-fixer-cache
+                - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Revision }}
+                - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Branch }}
+                - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}
+    - &run-php-cs-fixer
+        run:
+            name: Run PHP-CS-Fixer on "${CI_PROJECT_PATH}"
+            command: |-
+                cd ./${CI_PROJECT_PATH}
+                composer lint
+    - &run-phstan
+        run:
+            name: Run PHPStan on "${CI_PROJECT_PATH}"
+            command: |-
+                cd ./${CI_PROJECT_PATH}
+                composer phpstan
     - &save-composer-cache-by-branch
         save_cache:
             paths:
                 - ~/.composer/cache
-            key: composer-cache-{{ .Branch }}-{{ .BuildNum }}
+            key: composer-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Branch }}-{{ .BuildNum }}
     - &save-composer-cache-by-revision
         save_cache:
             paths:
                 - ~/.composer/cache
-            key: composer-cache-{{ .Revision }}-{{ .BuildNum }}
-    - &save-php-cs-fixer-cache-by-branch
+            key: composer-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Revision }}-{{ .BuildNum }}
+    - &save-project-dependencies-cache-by-branch
         save_cache:
             paths:
-                - .php_cs.cache
-            key: php-cs-fixer-cache-{{ .Branch }}-{{ .BuildNum }}
-    - &save-php-cs-fixer-cache-by-revision
+                - ./${CI_PROJECT_PATH}/vendor
+            key: project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Branch }}-{{ .BuildNum }}
+    - &save-project-dependencies-cache-by-revision
         save_cache:
             paths:
-                - .php_cs.cache
-            key: php-cs-fixer-cache-{{ .Revision }}-{{ .BuildNum }}
+                - ./${CI_PROJECT_PATH}/vendor
+            key: project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Revision }}-{{ .BuildNum }}
     - &update-composer
         run:
             name: Update Composer
             command: sudo composer self-update
 
 jobs:
-    php-cs-fixer:
+    api-php-cs-fixer:
         docker:
             - image: circleci/php:7.2
-
-        executor: php
         environment:
+            APP_DEBUG: 1
+            APP_ENV: dev
+            CI_PROJECT_PATH: api
             PHP_CS_FIXER_FUTURE_MODE: 1
         working_directory: ~/simple-cms
         steps:
             - checkout
             - *restore-composer-cache
-            - *restore-php-cs-fixer-cache
+            - *restore-project-dependencies-cache
             - *update-composer
-            - run:
-                name: Install PHP-CS-Fixer
-                command: composer global require friendsofphp/php-cs-fixer:^2.14
             - *save-composer-cache-by-revision
             - *save-composer-cache-by-branch
-            - run:
-                name: Run PHP-CS-Fixer
-                command: |-
-                    export PATH="$PATH:$HOME/.composer/vendor/bin"
-                    cd ./client-symfony/
-                    php-cs-fixer fix --dry-run --diff --ansi
-            - *save-php-cs-fixer-cache-by-revision
-            - *save-php-cs-fixer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-php-cs-fixer
+
+    client-symfony-php-cs-fixer:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            APP_DEBUG: 1
+            APP_ENV: dev
+            CI_PROJECT_PATH: client-symfony
+            PHP_CS_FIXER_FUTURE_MODE: 1
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-php-cs-fixer
+
+    api-phpstan:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            # https://github.com/phpstan/phpstan-symfony/issues/37
+            APP_DEBUG: 1
+            APP_ENV: dev
+            CI_PROJECT_PATH: api
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-phstan
+
+    client-symfony-phpstan:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            # https://github.com/phpstan/phpstan-symfony/issues/37
+            APP_DEBUG: 1
+            APP_ENV: dev
+            CI_PROJECT_PATH: client-symfony
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-phstan
 
 workflows:
     version: 2
     lint:
         jobs:
-            - php-cs-fixer
+            - api-php-cs-fixer
+            - client-symfony-php-cs-fixer
+    quality:
+        jobs:
+            - api-phpstan
+            - client-symfony-phpstan
