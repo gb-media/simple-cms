@@ -1,15 +1,15 @@
 version: '3.4'
 
 services:
-  php:
-    image: ${CONTAINER_REGISTRY_BASE}/php
+  api-php:
+    image: ${CONTAINER_REGISTRY_BASE}/api-php
     build:
       context: ./api
-      target: api_platform_php
+      target: api_php
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/php
-        - ${CONTAINER_REGISTRY_BASE}/nginx
-        - ${CONTAINER_REGISTRY_BASE}/varnish
+        - ${CONTAINER_REGISTRY_BASE}/api-php
+        - ${CONTAINER_REGISTRY_BASE}/api-nginx
+        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
       - db
     env_file:
@@ -21,16 +21,16 @@ services:
       - ./api/var:/srv/api/var:rw
 
   api:
-    image: ${CONTAINER_REGISTRY_BASE}/nginx
+    image: ${CONTAINER_REGISTRY_BASE}/api-nginx
     build:
       context: ./api
-      target: api_platform_nginx
+      target: api_nginx
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/php
-        - ${CONTAINER_REGISTRY_BASE}/nginx
-        - ${CONTAINER_REGISTRY_BASE}/varnish
+        - ${CONTAINER_REGISTRY_BASE}/api-php
+        - ${CONTAINER_REGISTRY_BASE}/api-nginx
+        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
-      - php
+      - api-php
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
@@ -38,14 +38,14 @@ services:
       - "8080:80"
 
   cache-proxy:
-    image: ${CONTAINER_REGISTRY_BASE}/varnish
+    image: ${CONTAINER_REGISTRY_BASE}/api-varnish
     build:
       context: ./api
-      target: api_platform_varnish
+      target: api_varnish
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/php
-        - ${CONTAINER_REGISTRY_BASE}/nginx
-        - ${CONTAINER_REGISTRY_BASE}/varnish
+        - ${CONTAINER_REGISTRY_BASE}/api-php
+        - ${CONTAINER_REGISTRY_BASE}/api-nginx
+        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
       - api
     volumes:
@@ -141,15 +141,15 @@ services:
     depends_on:
       - client-symfony
       - client-react
-      - admin
       - api
       - cache-proxy
+      - admin
     ports:
       - "443:443"
       - "444:444"
-      - "493:493"
       - "8443:8443"
       - "8444:8444"
+      - "9443:9443"
 
 volumes:
   db-data: {}
