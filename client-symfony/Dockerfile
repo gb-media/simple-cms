@@ -4,7 +4,7 @@
 ARG PHP_VERSION=7.2
 ARG NGINX_VERSION=1.15
 
-FROM php:${PHP_VERSION}-fpm-alpine AS symfony_php
+FROM php:${PHP_VERSION}-fpm-alpine AS client_symfony_php
 
 # persistent / runtime deps
 RUN apk add --no-cache \
@@ -12,7 +12,6 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
-		postgresql-client \
 	;
 
 ARG APCU_VERSION=5.1.12
@@ -21,14 +20,12 @@ RUN set -eux; \
 		$PHPIZE_DEPS \
 		icu-dev \
 		libzip-dev \
-		postgresql-dev \
 		zlib-dev \
 	; \
 	\
 	docker-php-ext-configure zip --with-libzip; \
 	docker-php-ext-install -j$(nproc) \
 		intl \
-		pdo_pgsql \
 		zip \
 	; \
 	pecl install \
@@ -86,10 +83,10 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM nginx:${NGINX_VERSION}-alpine AS symfony_nginx
+FROM nginx:${NGINX_VERSION}-alpine AS client_symfony_nginx
 
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/client-symfony
 
-COPY --from=symfony_php /srv/client-symfony/public public/
+COPY --from=client_symfony_php /srv/client-symfony/public public/

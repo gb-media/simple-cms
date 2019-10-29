@@ -74,7 +74,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/client-symfony-php
     build:
       context: ./client-symfony
-      target: symfony_php
+      target: client_symfony_php
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
         - ${CONTAINER_REGISTRY_BASE}/client-symfony
@@ -90,7 +90,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/client-symfony
     build:
       context: ./client-symfony
-      target: symfony_nginx
+      target: client_symfony_nginx
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
         - ${CONTAINER_REGISTRY_BASE}/client-symfony
