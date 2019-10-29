@@ -20,6 +20,12 @@ reusable-steps:
                 - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Revision }}
                 - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}-{{ .Branch }}
                 - project-dependencies-cache-{{ .Environment.CI_PROJECT_PATH }}
+    - &run-php-insights
+        run:
+            name: Run PHP Insights on "${CI_PROJECT_PATH}"
+            command: |-
+                cd ./${CI_PROJECT_PATH}
+                composer phpinsights
     - &run-php-cs-fixer
         run:
             name: Run PHP-CS-Fixer on "${CI_PROJECT_PATH}"
@@ -32,6 +38,12 @@ reusable-steps:
             command: |-
                 cd ./${CI_PROJECT_PATH}
                 composer phpstan
+    - &run-security-checker
+        run:
+            name: Run Symfony Security Check on "${CI_PROJECT_PATH}"
+            command: |-
+                cd ./${CI_PROJECT_PATH}
+                composer security
     - &save-composer-cache-by-branch
         save_cache:
             paths:
@@ -79,27 +91,6 @@ jobs:
             - *save-project-dependencies-cache-by-branch
             - *run-php-cs-fixer
 
-    client-symfony-php-cs-fixer:
-        docker:
-            - image: circleci/php:7.2
-        environment:
-            APP_DEBUG: 1
-            APP_ENV: dev
-            CI_PROJECT_PATH: client-symfony
-            PHP_CS_FIXER_FUTURE_MODE: 1
-        working_directory: ~/simple-cms
-        steps:
-            - checkout
-            - *restore-composer-cache
-            - *restore-project-dependencies-cache
-            - *update-composer
-            - *save-composer-cache-by-revision
-            - *save-composer-cache-by-branch
-            - *install-project-dependencies
-            - *save-project-dependencies-cache-by-revision
-            - *save-project-dependencies-cache-by-branch
-            - *run-php-cs-fixer
-
     api-phpstan:
         docker:
             - image: circleci/php:7.2
@@ -120,6 +111,43 @@ jobs:
             - *save-project-dependencies-cache-by-revision
             - *save-project-dependencies-cache-by-branch
             - *run-phstan
+
+    client-symfony-php-insights:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            CI_PROJECT_PATH: client-symfony
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-php-insights
+
+    client-symfony-php-cs-fixer:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            CI_PROJECT_PATH: client-symfony
+            PHP_CS_FIXER_FUTURE_MODE: 1
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-php-cs-fixer
 
     client-symfony-phpstan:
         docker:
@@ -142,6 +170,24 @@ jobs:
             - *save-project-dependencies-cache-by-branch
             - *run-phstan
 
+    client-symfony-security-checker:
+        docker:
+            - image: circleci/php:7.2
+        environment:
+            CI_PROJECT_PATH: client-symfony
+        working_directory: ~/simple-cms
+        steps:
+            - checkout
+            - *restore-composer-cache
+            - *restore-project-dependencies-cache
+            - *update-composer
+            - *save-composer-cache-by-revision
+            - *save-composer-cache-by-branch
+            - *install-project-dependencies
+            - *save-project-dependencies-cache-by-revision
+            - *save-project-dependencies-cache-by-branch
+            - *run-security-checker
+
 workflows:
     version: 2
     lint:
@@ -151,4 +197,8 @@ workflows:
     quality:
         jobs:
             - api-phpstan
+            - client-symfony-php-insights
             - client-symfony-phpstan
+    security:
+        jobs:
+            - client-symfony-security-checker
