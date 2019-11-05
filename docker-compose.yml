@@ -2,14 +2,9 @@ version: '3.4'
 
 services:
   api-php:
-    image: ${CONTAINER_REGISTRY_BASE}/api-php
     build:
       context: ./api
       target: api_php
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/api-php
-        - ${CONTAINER_REGISTRY_BASE}/api-nginx
-        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
       - db
     env_file:
@@ -21,14 +16,9 @@ services:
       - ./api/var:/srv/api/var:rw
 
   api:
-    image: ${CONTAINER_REGISTRY_BASE}/api-nginx
     build:
       context: ./api
       target: api_nginx
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/api-php
-        - ${CONTAINER_REGISTRY_BASE}/api-nginx
-        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
       - api-php
     # Comment out this volume in production
@@ -38,14 +28,9 @@ services:
       - "8080:80"
 
   cache-proxy:
-    image: ${CONTAINER_REGISTRY_BASE}/api-varnish
     build:
       context: ./api
       target: api_varnish
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/api-php
-        - ${CONTAINER_REGISTRY_BASE}/api-nginx
-        - ${CONTAINER_REGISTRY_BASE}/api-varnish
     depends_on:
       - api
     volumes:
@@ -70,14 +55,27 @@ services:
     ports:
       - "5432:5432"
 
+  client-symfony-node:
+    build:
+      context: ./client-symfony
+      target: client_symfony_node
+      args:
+        NODE_ENV: development
+    command: ["yarn", "watch"]
+    env_file:
+      - ./client-symfony/.env
+    # Comment out these volumes in production
+    volumes:
+      - ./client-symfony:/srv/client-symfony:rw,cached
+      # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+      - ./client-symfony/node_modules:/srv/client-symfony/node_modules
+
   client-symfony-php:
-    image: ${CONTAINER_REGISTRY_BASE}/client-symfony-php
     build:
       context: ./client-symfony
       target: client_symfony_php
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony
+    depends_on:
+      - client-symfony-node
     env_file:
       - ./client-symfony/.env
     # Comment out these volumes in production
@@ -87,13 +85,9 @@ services:
       - ./client-symfony/var:/srv/client-symfony/var:rw
 
   client-symfony:
-    image: ${CONTAINER_REGISTRY_BASE}/client-symfony
     build:
       context: ./client-symfony
       target: client_symfony_nginx
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony-php
-        - ${CONTAINER_REGISTRY_BASE}/client-symfony
     depends_on:
       - client-symfony-php
     # Comment out this volume in production
@@ -103,13 +97,8 @@ services:
       - "80:80"
 
   client-react:
-    # Use a static website hosting service in production
-    # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
-    image: ${CONTAINER_REGISTRY_BASE}/client-react
     build:
       context: client-react
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client-react
     env_file:
       - client-react/.env
     volumes:
@@ -119,13 +108,8 @@ services:
       - "81:3000"
 
   admin:
-    # Use a static website hosting service in production
-    # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
-    image: ${CONTAINER_REGISTRY_BASE}/admin
     build:
       context: ./admin
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/admin
     env_file:
       - ./admin/.env
     volumes:

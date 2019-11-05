@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+// Fonts
+
+// Settings
+@import "~bulma/sass/utilities/initial-variables.sass";
+@import "~bulma/sass/utilities/functions.sass";
+@import "~bulma/sass/utilities/derived-variables.sass";
+@import "settings/all";
+
+// Tools (helper, mixins and function)
+@import "~bulma/sass/utilities/animations.sass";
+@import "~bulma/sass/utilities/mixins.sass";
+@import "~bulma/sass/utilities/controls.sass";
+@import "~bulma/sass/base/helpers.sass";
+@import "tools/all";
+
+// Generic
+@import "~bulma/sass/base/minireset.sass";
+@import "~bulma/sass/base/generic.sass";
+@import "generic/all";
+
+// Base
+@import "~bulma/sass/elements/_all";
+@import "base/all";
+
+// Objects
+@import "~bulma/sass/form/_all";
+//@import "~bulma/sass/grid/columns";
+//@import "~bulma/sass/grid/tiles";
+//@import "~bulma/sass/layout/hero";
+//@import "~bulma/sass/layout/section";
+@import "objects/all";
+
+// Components
+@import "components/all";
+
+// Trumps
+@import "trumps/all";

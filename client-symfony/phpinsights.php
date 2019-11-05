@@ -12,5 +12,8 @@ return [
             'lineLimit' => 120,
             'absoluteLineLimit' => 160,
         ],
+        \SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff::class => [
+            'allAnnotationsAreUseful' => true,
+        ],
     ],
 ];

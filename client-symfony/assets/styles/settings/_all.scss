@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@import 'colors';
+@import 'fonts/all';
+
+// Bulma Override
+
+// Link colors
+$link: $t-color-blue;
+$link-hover: $t-color-blue-light;
+$link-hover-border: $t-color-blue-lither;
+$link-focus: $t-color-blue-light;
+$link-focus-border: $t-color-blue-lither;
+$link-active: $t-color-blue-light;
+$link-active-border: $t-color-blue-lither;
+
+// Typography
+$family-sans-serif: $t-family-open-sans;
+$family-monospace: $t-family-open-sans;
+$family-primary: $t-family-open-sans;
+$family-secondary: $t-family-open-sans;
+$family-code: $t-family-open-sans;
