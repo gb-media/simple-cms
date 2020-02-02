@@ -2,10 +2,10 @@
     "name": "simple-cms/api",
     "type": "project",
     "description": "An example api made with symfony 4 and api-platform.",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Prou Yann",
+            "name": "Yann Prou",
             "email": "prouyann@gmail.com"
         }
     ],

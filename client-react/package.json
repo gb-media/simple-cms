@@ -1,7 +1,12 @@
 {
-  "name": "client-react",
+  "name": "simple-cms/client-react",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "author": {
+    "name": "Yann Prou",
+    "email": "prouyann@gmail.com"
+  },
   "dependencies": {
     "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",

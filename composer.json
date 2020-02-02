@@ -2,10 +2,10 @@
     "name": "toofff/simple-cms",
     "type": "project",
     "description": "Simple CMS with API Platform",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Prou Yann",
+            "name": "Yann Prou",
             "email": "prouyann@gmail.com"
         }
     ],
