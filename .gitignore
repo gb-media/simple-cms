@@ -2,8 +2,3 @@
 /docker-compose.override.yaml
 /docker-compose.override.yml
 ###< docker ###
-
-###> composer ###
-/cghooks.lock
-/vendor/
-###< composer ###
