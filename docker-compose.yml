@@ -55,6 +55,14 @@ services:
     ports:
       - "5432:5432"
 
+  adminer:
+    image: adminer
+    volumes:
+      - "./docker/adminer/adminer.css:/var/www/html/adminer.css"
+    restart: always
+    ports:
+      - 9020:8080
+
   client-symfony-node:
     build:
       context: ./client-symfony

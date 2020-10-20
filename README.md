@@ -17,6 +17,7 @@ This starts the following services:
 | api                  | The HTTP server for the API (Nginx)                               | [8080](http://localhost:8080) | all
 | cache-proxy          | A HTTP cache proxy for the API provided by Varnish                | [8081](http://localhost:8081) | all (prefer using a managed service in prod)
 | db                   | A PostgreSQL database server                                      | 5432                          | all (prefer using a managed service in prod)
+| adminer              | Adminer as phpMinAdmin for PostgreSQL                             | [9020](http://localhost:9020) | all
 | client-symfony-node  |                                                                   | n/a                           | all
 | client-symfony-php   | The website with PHP, PHP-FPM 7.2, Composer and sensitive configs | n/a                           | all
 | client-symfony       | The HTTP server for the website (Nginx)                           | [80](http://localhost:80)     | dev
