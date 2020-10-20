@@ -83,6 +83,9 @@
     "ocramius/package-versions": {
         "version": "1.4.0"
     },
+    "php": {
+        "version": "7.2"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
